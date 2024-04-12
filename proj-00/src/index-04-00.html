@@ -1,0 +1,32 @@
+<!--
+	desc-00: Example 3: Simulating User Input, tag source-obs, inner-obs, rxjs-concatall
+	goal: 
+	line-code-added:
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/7.8.1/rxjs.umd.min.js"></script>
+  <title>Source Observable inner observables</title>
+</head>
+<body>
+	<div class="app">
+		<p>Press a key on your keyboard...</p>
+		<p id="output"></p>
+	</div>
+	<script>
+		const keyDownObservable$ = rxjs.fromEvent(document, 'keydown');
+
+		function simulateTyping(key){
+			return rxjs.interval(500).pipe(
+				rxjs.map(i => key + i),
+				rxjs.take(3)
+			);
+		}
+		keyDownObservable$.pipe(
+			rxjs.map(e => simulateTyping(e.key)),
+			rxjs.concatAll()
+		).subscribe(console.log);
+	</script>
+</body>
+</html>

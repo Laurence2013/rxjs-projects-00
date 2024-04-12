@@ -1,0 +1,42 @@
+<!--
+	desc-00: Give some rxjs code examples that includes concatall(), map(), take(), interval(), and of() using scenarios and examples. tag rxjs-concatall
+	desc-01: Scenario 2: User Input with Delay
+	desc-02: Typical example coding question. Option 1: User Experience Focus
+	desc-03: Typical example coding question. Option 2: Emphasis on Data Consistency
+	desc-04: Typical example coding question. Option 3: Technical Implementation
+	desc-05: At source01$ this is just a practice
+	goal:
+	line-code-added:
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/7.8.1/rxjs.umd.min.js"></script>
+  <title>Source Observable inner observables</title>
+</head>
+<body>
+	<input type="text" id="searchInput" placeholder="Enter your search">
+	<script>
+		const input = document.getElementById('searchInput');
+		const clicks$ = rxjs.fromEvent(input, 'keyup');	
+		
+		const source00$ = clicks$.pipe(
+			rxjs.map(event => event.target.value),
+			rxjs.map(value => rxjs.interval(1000).pipe(
+				rxjs.take(3),
+				rxjs.map(index => ({value, ind: index}))
+			)),
+			rxjs.concatAll()
+		);
+		const source01$ = clicks$.pipe(
+			rxjs.map(event => event.target.value),
+			rxjs.map(input => rxjs.of(input).pipe(
+				rxjs.delay(1000),
+				rxjs.map((v, i) => ({key: v, value: i++}))
+			)),
+			rxjs.concatAll()
+		);
+		source01$.subscribe(console.log);
+	</script>
+</body>
+</html>
