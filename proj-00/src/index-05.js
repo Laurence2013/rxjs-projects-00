@@ -1,5 +1,5 @@
 /*
-	desc-00: Give some RxJs code examples for endWith(), using scenarios and examples. Tag rxjs-endwith()
+	desc-00: Give some RxJs code examples for endWith(), using scenarios and examples. Tag rxjs-endwith
 	desc-01: Scenario 1: Progress Indicator. You're building a file upload component. You want to show "Upload Complete!" when the upload finishes.
 	desc-02: Option 1: Explanatory
 	desc-03: Option 2: Modification

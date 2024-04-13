@@ -1,5 +1,5 @@
 /*
-	desc-00: Give some RxJs code examples for endWith(), using scenarios and examples. Tag rxjs-endwith()
+	desc-00: Give some RxJs code examples for endWith(), using scenarios and examples. Tag rxjs-endwith
 	desc-01: Scenario 2: Countdown Timer. Imagine a countdown timer that displays "Time's up!" at the end.
 	goal:
 	line-code-added:
