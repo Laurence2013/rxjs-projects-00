@@ -1,0 +1,38 @@
+<!--
+	desc-00: Give some RxJs code examples for merge(), using scenarios and examples. Tag(s) rxjs-merge
+	desc-01: Scenarios and Examples: 1. Handling Multiple Click Events
+	goal: 
+	line-code-added:
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/7.8.1/rxjs.umd.min.js"></script>
+  <title>RxJs - merge()</title>
+</head>
+<body>
+	<div>
+		<button id='button1'>Click me button 1!</button>
+		<button id='button2'>Click me button 2!</button>
+	</div>
+	<script>
+		const button1 = document.getElementById('button1');
+		const button2 = document.getElementById('button2');
+
+		const clicks1$ = rxjs.fromEvent(button1, 'click').pipe(
+			rxjs.tap(() => console.log('button 1')),
+			rxjs.scan(val => val + 1, 0)
+		);
+		const clicks2$ = rxjs.fromEvent(button2, 'click').pipe(
+			rxjs.tap(() => console.log('button 2')),
+			rxjs.scan(val => val + 1, 0)
+		);
+
+		const source$ = rxjs.merge(clicks1$, clicks2$);
+		
+		source$.subscribe(console.log);
+	</script>
+</body>
+</html>
