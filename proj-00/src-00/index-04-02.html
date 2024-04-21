@@ -1,0 +1,24 @@
+<!--
+	desc-00: Scenario 3: Combining User Input and Server Data. Tag source-obs, inner-obs, rxjs-concatall
+	desc-01: What until you start looking into merge(). There is some error 'Uncaught TypeError: b ins not a function'
+	goal: 
+	line-code-added:
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/7.8.1/rxjs.umd.min.js"></script>
+  <title>Source Observable inner observables</title>
+</head>
+<body>
+	<input type="text" id="searchInput" placeholder="Enter your search">
+	<script>
+		const searchInput = document.getElementById('searchInput');
+		const keyUp$ = rxjs.fromEvent(searchInput, 'keyup');
+
+		keyUp$.pipe(
+			rxjs.merge(rxjs.interval(1000))
+		).subscribe(console.log);
+	</script>
+</body>
+</html>

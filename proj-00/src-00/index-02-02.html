@@ -1,0 +1,29 @@
+<!--
+desc-00: Using the combineLatest() function, tags rxjs-combinelatest, rxjs-fromevent
+desc-01: Combining user input and search term part 1
+goal: 
+line-code-added:
+*/
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/7.8.1/rxjs.umd.min.js"></script>
+  <title>Simple Node.js Server</title>
+</head>
+<body>
+	<input type="text" id="search-box">
+	<button id="search-button">Search</button>
+	<input type="text" id="search-term" hidden>
+
+	<script>
+		const searchTerm = document.getElementById('search-box');
+		const inputValues = rxjs.fromEvent(searchTerm, 'input').pipe(
+			rxjs.map(event => event.target.value)
+		);
+		inputValues.subscribe(val => console.log(val));
+	</script>
+</body>
+</html>
