@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+   <meta charset="UTF-8">
+	 <script src="https://cdnjs.cloudflare.com/ajax/libs/kefir/3.8.0/kefir.min.js" 
+		 integrity="sha512-IHLoMRAseBlXMz+exI6OV7r2Z4feaneeji1ySc2a2FU83wqA7QryhkyL/XU55lbM01FCl9/1wttqcs5jN1kssg==" crossorigin="anonymous" referrerpolicy="no-referrer">
+	 </script>
+   <title>HTML 5 Boilerplate</title>
+ </head>
+ <body>
+	 <button id='btn-1'>Click me!</button>
+	 <input id='inp-1' placeholder='type here'>
+	 <script>
+		 const logger = {
+			 log: function(msg){
+				 console.log(msg);
+			 }
+		 };
+		 const clicks$ = Kefir.fromEvents(document.getElementById('btn-1'), 'click');
+		 const inputs$ = Kefir.fromEvents(document.getElementById('inp-1'), 'keyup').map(ev => ev.target.value);
+
+     const clickCounts = clicks$.scan(sum => sum + 1, 0);
+		 
+		 //clicks$.onValue(x => logger.log(x.target.id));
+		 //inputs$.onValue(x => logger.log(x))
+		 //clickCounts.onValue(x => logger.log(x))
+		 
+	 </script>
+ </body>
+</html>
