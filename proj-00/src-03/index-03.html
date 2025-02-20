@@ -1,0 +1,38 @@
+<!--
+	desc-00: in rxjs what is sharereplay() operator?
+	desc-00a: rxjs-sharereplay
+	desc-01: Scenario 1: Search functionality with debouncing and caching
+	goal:
+	line-code-added:
+-->
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+	 <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/7.8.1/rxjs.umd.min.js"></script>
+   <title>Search functionality with debouncing and caching</title>
+ </head>
+ <body>
+	 <section>
+		 <input type="text" id="searchInput" placeholder="Search...">
+		 <div id="searchResults"></div>
+	 </section>
+	 <script>
+		 const fetchSearchResults00$ = (query) => rxjs.of(`Results of ${query}`).pipe(rxjs.delay(500));
+		 const searchInput = document.getElementById('searchInput');
+		 const searchQueries00$ = rxjs.fromEvent(searchInput, 'input').pipe(
+			 rxjs.debounceTime(100),
+			 rxjs.map(e => e.target.value),
+			 rxjs.distinctUntilChanged(),
+			 rxjs.shareReplay(2)
+		 );
+		 const searchResults00$ = searchQueries00$.pipe(
+			 rxjs.switchMap(query => fetchSearchResults00$(query))
+		 );
+		 searchResults00$.subscribe(res => console.log(`Subscriber 1: ${res}`));
+		 setTimeout(_ => searchResults00$.subscribe(res => console.log(`Subscriber 2: ${res}`)), 9000);
+	 </script>
+ </body>
+</html>

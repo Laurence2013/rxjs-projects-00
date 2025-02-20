@@ -15,4 +15,4 @@ const merged00$ = source00$.pipe(merge(source01$));
 const merged01$ = combineLatest(source01$, source00$);
 
 
-merged01$.subscribe(console.log);
+merged00$.subscribe(console.log);

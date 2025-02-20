@@ -1,0 +1,52 @@
+<!--
+	desc-00: In RxJs explain the bufferWhen() operator.
+	desc-00a: rxjs-bufferTime
+	desc-01: In RxJs explain the bufferTime() operator.
+		desc-01-00: Example
+	desc-02: Example 2: Multiple active buffers
+	desc-03: Example 3: Buffer clicks for 1 second
+	goal:
+	line-code-added:
+-->
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+	 <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/7.8.1/rxjs.umd.min.js"></script>
+   <title>Dynamic Debouncing</title>
+ </head>
+ <body>
+	 <div>
+		 <button id='myClick'>Click me</button>
+	 </div>
+   <script>
+		 const input = document.getElementById('myClick');
+		 const keyup$ = rxjs.fromEvent(input, 'click');
+		
+ 		 /* desc-01 */
+		 /*const result00$ = keyup$.pipe(
+			 rxjs.take(3),
+			 rxjs.bufferTime(2000)
+		 );
+		 result00$.subscribe(console.log);*/
+
+		 /* desc-02 */
+	 	 /*const source00$ = rxjs.interval(500);
+		 const result00$ = source00$.pipe(
+			 rxjs.bufferTime(3000, 1000),
+			 rxjs.take(5)
+		 )
+		 result00$.subscribe(console.log);*/
+
+		 /* desc-03 */
+		 const result01$ = keyup$.pipe(
+			 rxjs.mapTo(1),
+			 rxjs.scan((acc, curr) => acc + curr, 0),
+			 rxjs.bufferTime(5000)
+		 );
+		 result01$.subscribe(val => console.log(val));
+	 </script>
+ </body>
+</html>

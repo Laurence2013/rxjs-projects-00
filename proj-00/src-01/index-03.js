@@ -1,5 +1,6 @@
 /*
-	desc-00: Example 1: merging multiple observables, static method. Tag(s) rxjs-merge
+	desc-00: https://www.learnrxjs.io/learn-rxjs/operators/combination/merge. Tag(s) rxjs-merge
+	desc-01: Example 1: merging multiple observables, static method. 	
 	goal:
 	line-code-added:
 */

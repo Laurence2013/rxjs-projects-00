@@ -27,9 +27,7 @@ const userPosts$ = userId => from(getPosts(userId));
 //const result$ = concat(user$, user$.pipe(switchMap(user => userPosts$(user.id))));
 const result$ = concat(user$, user$.pipe(switchMap(userPosts$)));
 
-result$.subscribe(data => {
-	console.log(data);
-});
+result$.subscribe(data => console.log(data));
 
 //1: user$.subscribe(console.log);
 //2: userPosts$(2).subscribe(console.log);

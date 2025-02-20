@@ -5,11 +5,12 @@
 */
 
 const { interval } = require('rxjs');
-const { merge } = require('rxjs/operators');
+const { concat, merge, mapTo } = require('rxjs/operators');
 
-const first$ = interval(2500);
-const second$ = interval(1000);
+const first$ = interval(5000).pipe(mapTo('I am first'));
+const second$ = interval(500).pipe(mapTo('I am second'));
 
-const source$ = first$.pipe(merge(second$));
+const source00$ = first$.pipe(merge(second$));
+const source01$ = first$.pipe(concat(second$));
 
-source$.subscribe(console.log);
+source00$.subscribe(console.log);

@@ -30,8 +30,13 @@ const fetchEachPosts$ = (userId) => {
 		delay(1000)
 	);
 };
-const combUserPosts$ = localUserAsObs$.pipe(
+const combUserPosts00$ = localUserAsObs$.pipe(
 	concat(...localUserData.map(user => fetchEachPosts$(user.id).pipe(
+		map(posts => ({...user, posts}))
+	)))
+);
+const combUserPosts01$ = localUserAsObs$.pipe(
+	concat(localPostsData.map(user => fetchEachPosts$(user.id).pipe(
 		map(posts => ({...user, posts}))
 	)))
 );
@@ -41,5 +46,5 @@ const combUserPosts$ = localUserAsObs$.pipe(
 //3a: fetchEachPosts$(2).subscribe(console.log);
 //3b: fetchEachPosts$(3).subscribe(console.log);
 
-combUserPosts$.subscribe(data => console.log(data));
+combUserPosts01$.subscribe(data => console.log(data));
 

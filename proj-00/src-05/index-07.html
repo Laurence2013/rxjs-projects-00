@@ -1,0 +1,42 @@
+<!--
+	desc-00: In RxJs explain in great detail exhaustMap() operator
+	desc-00a: rxjs-exhaustMap, rxjs-scan
+	desc-01: 1. Preventing Duplicate HTTP Requests
+	goal:
+	line-code-added:
+-->
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+	 <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/7.8.1/rxjs.umd.min.js"></script>
+   <title>Preventing duplicate HTTP requests</title>
+ </head>
+ <body>
+	 <button id="myButton">Click me!</button>
+   <script>
+		 const clicks = rxjs.fromEvent(document.getElementById('myButton'), 'click');
+
+		 const result00$ = clicks.pipe(
+			 rxjs.exhaustMap(_ => rxjs.of({id: 1, name: 'Laurence', age: 29}).pipe(
+				 rxjs.delay(3000),
+				 rxjs.map(user => user.name)
+			 )),
+		 );
+		 const result01$ = clicks.pipe(
+			 rxjs.exhaustMap(_ => rxjs.from(['value1','value2','value3','value4','value5'])),
+			 rxjs.scan(count => count + 1, 0)
+		 );
+		 const result02$ = clicks.pipe(
+			 rxjs.exhaustMap(_ => rxjs.of('value1','value2','value3')),
+			 rxjs.scan(count => count + 1, 0)
+		 );
+		 const result03$ = clicks.pipe(
+			 rxjs.exhaustMap(_ => rxjs.from(['value1','value2','value3','value4','value5']).pipe(rxjs.delay(3000))),
+		 );
+		 result00$.subscribe(val => console.log(val));
+	 </script>
+ </body>
+</html>

@@ -1,0 +1,36 @@
+<!--
+	desc-00: In RxJs explain the bufferWhen() operator.
+	desc-00a: rxjs-bufferToggle
+	desc-01: Example 1: Buffering mouse clicks
+	goal:
+	line-code-added:
+-->
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+	 <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/7.8.1/rxjs.umd.min.js" referrerpolicy="no-referrer"></script>
+   <title>Dynamic Debouncing</title>
+ </head>
+ <body>
+	 <div>
+		 <button id='myClick'>Click me</button>
+	 </div>
+   <script>
+		 const input = document.getElementById('myClick');
+		 const clicks$ = rxjs.fromEvent(input, 'click');
+		 const openings$ = rxjs.interval(5000);
+		 const closing$ = _ => rxjs.interval(3000)
+		 
+		 const buffered$ = clicks$.pipe(
+			 rxjs.mapTo(1),
+			 rxjs.scan((acc, curr) => acc + curr, 0),
+			 rxjs.filter(val => val % 2 === 0),
+			 rxjs.bufferToggle(openings$, closing$)
+		 )
+		 buffered$.subscribe(console.log);
+	 </script>
+ </body>
+</html>

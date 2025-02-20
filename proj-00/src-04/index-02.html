@@ -1,0 +1,58 @@
+<!--
+	desc-00: In RxJs explain what the debounce() operator do?
+	desc-00a: rxjs-debounce, rxjs-debounceTime
+	desc-01: 1. Basic Debounce with fromEvent and debounceTime()
+	desc-02: 2. Debounce with Dynamic Duration using debounce()
+	desc-03: Code Example: Simulating a Search API
+	goal:
+	line-code-added:
+-->
+<html lang="en">
+ <head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+	 <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/7.8.1/rxjs.umd.min.js"></script>
+   <title>Search functionality with debouncing and caching</title>
+ </head>
+ <body>
+	 <section>
+		 <button id='myButton'>Click me!</button>
+	 </section>
+	 <hr>
+	 <section>
+		 <input type="text" id="myInput" placeholder="Enter your name">
+		 <div id="searchResults"></div>
+	 </section>
+	 <script>
+		 // desc-01
+		 const button = document.getElementById('myButton');
+		 const click00$ = rxjs.fromEvent(button, 'click');
+		 //click00$.pipe(rxjs.debounceTime(500)).subscribe(_ => console.log('Button clicked!'));
+
+	   // desc-02
+   	 const input = document.getElementById('myInput');
+		 const input00$ = rxjs.fromEvent(input, 'input');
+
+		 // desc-02a
+		 const result00$ = input00$.pipe(
+			 rxjs.debounce(e => {
+				 const value = e.target.value;
+				 return value.length > 3 ? rxjs.interval(1000) : rxjs.interval(300);
+			 })
+		 )
+		 //result00$.subscribe(e => console.log('Input value:', e.target.value));
+		
+		 // desc-03
+		 const simulateAPIResponse = query => rxjs.of(`Results from: ${query.target.value}`).pipe(rxjs.delay(500));
+		 const result01$ = input00$.pipe(
+			 rxjs.debounce(e => {
+				 const value = e.target.value;
+				 return value.length > 3 ? rxjs.interval(1000) : rxjs.interval(300);
+			 }),
+			 rxjs.switchMap(query => simulateAPIResponse(query))
+		 );
+		 result01$.subscribe(results => console.log(results));
+	 </script>
+ </body>
+</html>

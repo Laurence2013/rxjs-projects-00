@@ -7,13 +7,21 @@ const { map, take, combineAll } = require('rxjs/operators');
 const { interval } = require('rxjs');
 
 const delays = [1000, 500, 250];
-const countdown$ = interval(1000).pipe(
+const countdown00$ = interval(1000).pipe(
 	take(delays.length),
-	map((i, index) => interval(delays[index]).pipe(
+	take(4),
+	map((num, index) => interval(delays[index]).pipe(
 		take(2),
-		map(_ => delays.length - i - 1)
+		map(_ => delays.length - num - 1)
+	))
+);
+const countdown01$ = interval(1000).pipe(
+	take(5),
+	map((num, index) => interval(delays[index]).pipe(
+		take(2),
+		map(_ => delays.length - num - 1)
 	))
 );
 
-countdown$.pipe(combineAll()).subscribe(console.log);
+countdown01$.pipe(combineAll()).subscribe(console.log);
 //countdown$.subscribe(console.log);

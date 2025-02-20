@@ -1,0 +1,30 @@
+<!--
+	desc-00: Give some RxJs code examples using combineAll(), interval() and some other operators.
+	desc-00a: Tag rxjs-combineall, rxjs-interval
+	desc-01: Example 2: Simulating Parallel API Requests
+	goal: 
+	line-code-added:
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/7.8.1/rxjs.umd.min.js"></script>
+  <title>Simulating Parallel API Requests</title>
+</head>
+<body>
+	<script>
+		const apiEndpoints = ['https://api.example.com/data1', 'https://api.example.com/data2', 'https://api.example.com/data3'];
+		const endpoints00$ = rxjs.from(apiEndpoints).pipe(
+			rxjs.map(endpoint => rxjs.of(endpoint).pipe(
+				rxjs.delay(1000),
+				rxjs.map(url => ({link: url}))
+			)),
+			rxjs.concatAll()
+		);
+		endpoints00$.subscribe(console.log);
+	</script>
+</body>
+</html>
+

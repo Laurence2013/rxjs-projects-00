@@ -1,0 +1,39 @@
+<!--
+	desc-00: In RxJs explain find(), In RxJs, what is the sample() operator?
+	desc-00a: rxjs-find, rxjs-first, rxjs-ignoreElements, rxjs-last, rxjs-sample, rxjs-single, rxjs-skip, rxjs-skipWhile
+	desc-01: In RxJs, what is the sample() operator? Example
+	desc-02: It seems like skipUntil() and skipWhile() works in tandem combination operators? Example use case
+	goal:
+	line-code-added:
+-->
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+	 <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/7.8.1/rxjs.umd.min.js"></script>
+   <title>In RxJs, what is the sample() operator?</title>
+ </head>
+ <body>
+	 <button id="click">Click Me!</button>
+   <script>
+		 // desc-01
+		 const source$ = rxjs.interval(1000);
+		 const click$ = rxjs.fromEvent(document, 'click');
+		 const result00$ = source$.pipe(rxjs.sample(click$));
+		 //result00$.subscribe(value => console.log(value));
+
+     // desc-02
+		 const userActions$ = rxjs.fromEvent(document, 'click');
+		 const systemEvents$ = rxjs.interval(5000);
+   	 
+		 const filteredActions$ = userActions$.pipe(
+			 rxjs.skipUntil(systemEvents$),
+			 rxjs.skipWhile(event => !event.shiftKey),
+			 rxjs.filter(event => event.clientX > 500)
+		 );
+		 filteredActions$.subscribe(ev => console.log('Processed user action: ', ev));
+	 </script>
+ </body>
+</html>

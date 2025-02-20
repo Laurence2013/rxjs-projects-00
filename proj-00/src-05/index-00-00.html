@@ -1,0 +1,33 @@
+<!--
+	desc-00: In RxJs explain the bufferWhen() operator.
+	desc-00a: rxjs-bufferWhen
+	desc-01: 2. Dynamic Debouncing:
+	goal:
+	line-code-added:
+-->
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+	 <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/7.8.1/rxjs.umd.min.js"></script>
+   <title>Dynamic Debouncing</title>
+ </head>
+ <body>
+	 <div>
+		 <input id="myInput" type="text" name="firstName" placeholder="Enter your first name">
+	 </div>
+   <script>
+		 const input = document.getElementById('myInput');
+		 const keyup$ = rxjs.fromEvent(input, 'keyup');
+		
+		 const test00$ = keyup$.pipe(
+			 rxjs.filter(event => event.key === 'Enter'),
+			 rxjs.bufferCount(2),
+			 rxjs.scan((acc, curr) => acc.concat(curr), [])
+		 );
+		 test00$.subscribe(values => console.log('Buffered Enter key events:', values));
+	 </script>
+ </body>
+</html>
