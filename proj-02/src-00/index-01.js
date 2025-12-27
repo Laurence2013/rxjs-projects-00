@@ -37,7 +37,7 @@ const result97$ = source00$.pipe(withLatestFrom(source01$));
 const source02$ = interval(1000);
 const source03$ = interval(5000);
 const result96$ = source02$.pipe(withLatestFrom(source03$));
-result96$.subscribe(console.log);
+// result96$.subscribe(console.log);
 
 // combineLatest()
 const source04$ = timer(0, 1000).pipe(take(2));
