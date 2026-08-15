@@ -12,5 +12,9 @@
   "dependencies": {
     "kefir": "^3.8.8",
     "rxjs": "^7.8.2"
+  },
+  "devDependencies": {
+    "ts-node": "^10.9.2",
+    "typescript": "^7.0.2"
   }
 }
