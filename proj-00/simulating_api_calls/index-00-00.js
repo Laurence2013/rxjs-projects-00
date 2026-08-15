@@ -87,7 +87,7 @@ const profile01$ = userIds02$.pipe(
 		})
 	)),
 );
-profile01$.subscribe(console.log);
+fetchUserProfile02d(2).subscribe(console.log);
 
 const profile02$ = fetchUserProfile02a();
 const profile03$ = fetchUserProfile02d();
