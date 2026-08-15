@@ -10,22 +10,22 @@ const { delay } = require('rxjs/operators');
 
 // 1. Predict the output of the following code
 
-const sub = new AsyncSubject();
+const sub$ = new AsyncSubject();
 //sub.subscribe(console.log);
-sub.next(123);
+sub$.next(123);
 //sub.subscribe(console.log);
-sub.next(444);
-sub.complete();
+sub$.next(444);
+sub$.complete();
 
 // 2. Quiz 1: Triggering the Emission
 // Goal: Make the subscriber log the final calculated 100
 
-const calcSubject = new AsyncSubject<string>();
+const calcSubject$ = new AsyncSubject<string>();
 //calcSubject.subscribe(val => console.log(`Result: ${val}`));
-calcSubject.next(25);
-calcSubject.next(250);
-calcSubject.next(2500);
-calcSubject.complete()
+calcSubject$.next(25);
+calcSubject$.next(250);
+calcSubject$.next(2500);
+calcSubject$.complete()
 
 // 3 Quiz 2: The late subscriber
 // Goal: Allow subscriber 2 to receive the cached outcome
@@ -39,8 +39,8 @@ task$.complete();
 // 4 Quiz 3: One-Shot HTTP simulation
 // Goal: Safely complete the stream inside the promise handler
 
-function fetchUserData(id): Observable<{id: number, name: string}>{
-	const subject$ = new AsyncSubject<{id: number, name: string}>();
+function fetchUserData(id: number | string): Observable<{name: string, [key: string]: any}>{
+	const subject$ = new AsyncSubject<{name: string, [key: string]: any}>();
 	
 	fetch(`https://swapi.py4e.com/api/people/${id}/`)
 	.then(res => !res.ok ? Promise.reject(new Error(`Request failed with status ${res.status}`)) : res.json())
@@ -48,7 +48,7 @@ function fetchUserData(id): Observable<{id: number, name: string}>{
 		subject$.next(data);
 		subject$.complete();
 	})
-	.catch(err => subject$.next(err))
+	.catch(err => subject$.error(err))
 
 	return subject$.asObservable();
 };
